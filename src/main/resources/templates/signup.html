@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Sign-up | My Recipes</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" th:href="@{/css/unsemantic-grid-responsive.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+  <nav>
+    <a th:href="@{/signup}">
+      sign-up
+    </a>
+    &bull;
+    <a th:href="@{/login}">
+      login
+    </a>
+  </nav>
+
+  <div th:if="${flash != null}" class="container">
+    <i class="right material-icons" data-close="">close</i>
+    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+  </div>
+
+  <div class="grid-container">
+
+    <div class="grid-100">
+      <a th:href="@{/profile}">
+        <h1>
+          <img th:src="@{/images/chefbot.svg}" height="60px">
+          <br>
+          My Recipes
+        </h1>
+      </a>
+    </div>
+
+   <form th:action="@{/signup}" method="post" th:object="${user}">
+    <div class="grid-100">
+      <div class="recipes">
+        <p>
+          <input type="hidden" th:field="*{id}"/>
+        </p>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <input type="text" placeholder="Username" th:field="*{username}"/>
+          </p>
+        </div> <div class="clear"></div>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <input placeholder="Password" type="password" th:field="*{password}" name="password"/>
+          </p>
+        </div> <div class="clear"></div>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <input placeholder="Password Again" type="password" name="passwordAgain"/>
+          </p>
+        </div> <div class="clear"></div>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <button class="button" type="submit">Sign-up</button>
+          </p>
+        </div> <div class="clear"></div>
+      </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+   </form>
+  </div> <!-- grid-container -->
+</body>
+</html>

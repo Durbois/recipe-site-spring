@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title th:text="${recipe.name}">Brioche French Toast with Nutella | My Recipes</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" th:href="@{/css/unsemantic-grid-responsive.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+  <nav>
+    <a th:href="@{/profile}" th:text="${user.username}">
+      Chandra S.
+    </a>
+    &bull;
+    <a th:href="@{/logout}">
+      logout
+    </a>
+  </nav>
+
+  <div class="grid-container">
+
+    <div class="grid-100">
+      <a th:href="@{/profile}">
+        <h1>
+          <img th:src="@{/images/chefbot.svg}" height="60px">
+          <br>
+          My Recipes
+        </h1>
+      </a>
+    </div>
+
+    <div class="grid-100">
+
+      <div class="recipes">
+
+        <div class="grid-100 row controls">
+          <div class="grid-50">
+            <h2 th:text="${recipe.name}"> Brioche French Toast with Nutella </h2>
+          </div>
+          <div class="grid-50">
+            <h2 class="flush-right">
+              <form th:action="@{|/recipe/favorite/${recipe.id}|}" method="post">
+                <button style="background-color:white" type="submit">
+                  <img th:if="${#lists.contains(user.favoriteRecipes, recipe)}" th:src="@{/images/favorited.svg}" height="16px">
+                  <img th:if="${not #lists.contains(user.favoriteRecipes, recipe)}" th:src="@{/images/favorite.svg}" height="16px">
+                </button>
+              </form>
+            </h2>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Photo </label>
+            </p>
+          </div>
+          <div class="grid-40">
+            <p>
+              <img th:if="${recipe.image}"
+                   th:src="@{|/recipe/${recipe.id}.recipe|}" height="256"
+                   width="256"/>
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Name </label>
+            </p>
+          </div>
+          <div class="grid-40">
+            <p th:text="${recipe.name}">
+              Brioche French Toast with Nutella
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Description </label>
+            </p>
+          </div>
+          <div class="grid-40">
+            <p th:text="${recipe.description}">
+              Yummmy dessert toast covered in egg wash and topped with nutella and seasonal fruit.
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Category </label>
+            </p>
+          </div>
+          <div class="grid-30">
+            <p th:text="${recipe.category}">
+              Dessert
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Prep Time (in minutes) </label>
+            </p>
+          </div>
+          <div class="grid-20">
+            <p th:text="${recipe.preparationTime}">
+              5 minutes
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Cook Time (in minutes) </label>
+            </p>
+          </div>
+          <div class="grid-20">
+            <p th:text="${recipe.cookingTime}">
+              15 minutes
+            </p>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row">
+          <div class="grid-20">
+            <p>
+              <label> Ingredients </label>
+            </p>
+          </div>
+          <div class="grid-30">
+            <p>
+              <label> Item </label>
+              </p>
+            </div>
+            <div class="grid-30">
+              <p>
+                <label> Condition </label>
+                </p>
+              </div>
+              <div class="grid-20">
+                <p>
+                  <label> Quantity (in gr) </label>
+                  </p>
+                </div>
+
+                <div class="ingredient-row" th:each="ingredient : ${recipe.ingredients}">
+                  <div class="prefix-20 grid-30">
+                    <p th:text="${ingredient.name}">
+                      Eggs
+                    </p>
+                  </div>
+                  <div class="grid-30">
+                    <p th:text="${ingredient.condition}">
+                      Fresh
+                    </p>
+                  </div>
+                  <div class="grid-10 suffix-10">
+                    <p th:text="${ingredient.quantity}">
+                      2
+                    </p>
+                  </div>
+                </div>
+
+              </div> <div class="clear"></div>
+
+              <div class="grid-100 row">
+                <div class="grid-20">
+                  <p>
+                    <label> Steps </label>
+                  </p>
+                </div>
+                <div class="grid-80">
+                  <p>
+                    <label> Description </label>
+                    </p>
+                  </div>
+
+                  <div class="step-row" th:each="step : ${recipe.steps}">
+                    <div class="prefix-20 grid-80">
+                      <p th:text="${step.name}">
+                        1. Crack your eggs and beat them.
+                      </p>
+                    </div>
+                  </div>
+
+                </div> <div class="clear"></div>
+
+                <div class="row">&nbsp;</div>
+
+              </div> <!-- recipes -->
+            </div> <!-- grid-100 -->
+          </div> <!-- grid-container -->
+        </body>
+        </html>

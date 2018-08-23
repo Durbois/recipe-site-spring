@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title>My Recipes</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" th:href="@{/css/unsemantic-grid-responsive.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+  <nav>
+    <a th:href="@{/profile}" th:text="${user.username}">
+      Chandra S.
+    </a>
+    &bull;
+    <a th:href="@{/logout}">
+      logout
+    </a>
+  </nav>
+
+  <div th:if="${flash != null}" class="container">
+    <i class="right material-icons" data-close="">close</i>
+    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+  </div>
+
+  <div class="grid-container">
+
+    <div class="grid-100">
+      <a th:href="@{/profile}">
+        <h1>
+          <img th:src="@{/images/chefbot.svg}" height="60px">
+          <br>
+          My Recipes
+        </h1>
+      </a>
+    </div>
+
+    <div class="grid-100">
+
+      <div class="recipes">
+
+        <div class="grid-100 row controls">
+          <div class="grid-30">
+            <form th:action="@{/recipe/category}" method="post">
+              <select name="category">
+                <option value="" disabled="disabled">All Categories</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.name}"
+                        th:text="${cat.name}">All Categories
+                </option>
+              </select>
+              <button class="button" type="submit">Search by Category</button>
+            </form>
+          </div>
+          <div class="grid-40">
+            <form th:action="@{/recipe/search}" method="post">
+              <input type="text" name="search" placeholder="Please enter a search term..."/>
+              <button class="button" type="submit">Search by Description</button>
+            </form>
+          </div>
+          <div class="grid-30">
+            <div class="flush-right">
+              <a th:href="@{/recipe/build}">+ Add Recipe</a>
+            </div>
+          </div>
+        </div> <div class="clear"></div>
+
+        <div class="grid-100 row addHover" th:each="recipe : ${recipes}">
+          <a th:href="@{|/recipe/detail/${recipe.id}|}">
+            <div class="grid-70">
+              <p>
+                <span>
+                  <img th:if="${#lists.contains(user.favoriteRecipes, recipe)}" th:src="@{/images/favorited.svg}" height="12px">
+                  <img th:if="${not #lists.contains(user.favoriteRecipes, recipe)}" th:src="@{/images/favorite.svg}" height="12px">
+                </span>
+                <span th:text="${recipe.name}"> </span>
+              </p>
+            </div>
+          </a>
+          <div class="hoverBlock">
+            <div class="grid-30">
+              <div class="flush-right">
+                <p>
+                  <a th:href="@{|/recipe/edit/${recipe.id}|}"> <img th:src="@{/images/edit.svg}" height="12px"> Edit </a>
+                  <a th:href="@{|/recipe/delete/${recipe.id}|}"> <img th:src="@{/images/delete.svg}" height="12px"> Delete </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div> <div class="clear"></div>
+        <div class="row">&nbsp;</div>
+
+      </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+  </div> <!-- grid-container -->
+</body>
+</html>
