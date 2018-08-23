@@ -53,9 +53,6 @@ public class UserControllerTest {
     Authentication auth = new UsernamePasswordAuthenticationToken(user, null);
     SecurityContextHolder.getContext().setAuthentication(auth);
 
-    User userDao = new User(user.getUsername(), user.getPassword(), "ROLE_USER");
-    when(userService.findByUsername(anyString())).thenReturn(userDao);
-
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
   }
 
@@ -75,10 +72,7 @@ public class UserControllerTest {
   @Test
   public void registerUser() throws Exception  {
 
-    when(userService.findByUsername(any())).thenReturn(new User("username",
-        "password", "ROLE_USER"));
-
-    mockMvc.perform(post("/signup"));
+   mockMvc.perform(post("/signup"));
   }
 
   @Test
