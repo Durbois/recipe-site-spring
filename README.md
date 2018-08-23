@@ -1,1 +1,1 @@
-# recipe-site-spring
+[![Build Status](https://travis-ci.org/Durbois/recipe-site-spring.svg?branch=master)](https://travis-ci.org/Durbois/recipe-site-spring)
